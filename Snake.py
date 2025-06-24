@@ -1,128 +1,138 @@
 import tkinter as tk
 import random
+import pygame
+
+# Initialize Pygame mixer
+pygame.mixer.init()
+pygame.mixer.music.load("/home/rgukt/Downloads/background.mp3")
+pygame.mixer.music.play(-1)
+
+eat_sound = pygame.mixer.Sound("/home/rgukt/Downloads/eat.wav")
+hit_sound = pygame.mixer.Sound("/home/rgukt/Downloads/hit.wav")
 
 # Constants
-GAME_WIDTH = 700
-GAME_HEIGHT = 500
-SPEED = 150
-SPACE_SIZE = 20
-BODY_PARTS = 3
-SNAKE_COLOR = "GOLD"
-FOOD_COLOR = "RED"
-BACKGROUND_COLOR = "BLACK"
+WIDTH, HEIGHT = 600, 400
+CELL = 20
+SPEED = 100
 
-class Snake:
-    def __init__(self):
-        self.body_size = BODY_PARTS
-        self.coordinates = []
-        self.squares = []
+class SnakeGame:
+    def __init__(self, root):
+        self.root = root
+        self.canvas = tk.Canvas(root, bg="black", width=WIDTH, height=HEIGHT)
+        self.canvas.pack()
 
-        for i in range(0, BODY_PARTS):
-            self.coordinates.append([0, 0])
+        self.snake = [(100, 100), (80, 100), (60, 100)]
+        self.food = self.get_new_food()
+        self.direction = "Right"
+        self.running = True
+        self.score = 0
+        self.hearts = 5
+        self.muted = False
 
-        for x, y in self.coordinates:
-            square = canvas.create_rectangle(x, y, x + SPACE_SIZE, y + SPACE_SIZE, fill=SNAKE_COLOR, tag="snake")
-            self.squares.append(square)
+        self.root.bind("<Up>", lambda e: self.change_dir("Up"))
+        self.root.bind("<Down>", lambda e: self.change_dir("Down"))
+        self.root.bind("<Left>", lambda e: self.change_dir("Left"))
+        self.root.bind("<Right>", lambda e: self.change_dir("Right"))
+        self.root.bind("p", self.pause)
+        self.root.bind("r", self.resume)
+        self.root.bind("m", self.toggle_music)
 
-class Food:
-    def __init__(self):
-        x = random.randint(0, (GAME_WIDTH / SPACE_SIZE) - 1) * SPACE_SIZE
-        y = random.randint(0, (GAME_HEIGHT / SPACE_SIZE) - 1) * SPACE_SIZE
+        self.draw()
+        self.update()
 
-        self.coordinates = [x, y]
-        canvas.create_oval(x, y, x + SPACE_SIZE, y + SPACE_SIZE, fill=FOOD_COLOR, tag="food")
+    def get_new_food(self):
+        while True:
+            x = random.randint(0, (WIDTH - CELL) // CELL) * CELL
+            y = random.randint(0, (HEIGHT - CELL) // CELL) * CELL
+            if (x, y) not in self.snake:
+                return (x, y)
 
-def next_turn(snake, food):
-    x, y = snake.coordinates[0]
+    def draw(self):
+        self.canvas.delete("all")
 
-    if direction == "up":
-        y -= SPACE_SIZE
-    elif direction == "down":
-        y += SPACE_SIZE
-    elif direction == "left":
-        x -= SPACE_SIZE
-    elif direction == "right":
-        x += SPACE_SIZE
+        # Draw snake
+        for i, (x, y) in enumerate(self.snake):
+            color = "gold" if i == 0 else "green"
+            self.canvas.create_rectangle(x, y, x + CELL, y + CELL, fill=color)
 
-    snake.coordinates.insert(0, (x, y))
-    square = canvas.create_rectangle(x, y, x + SPACE_SIZE, y + SPACE_SIZE, fill=SNAKE_COLOR)
-    snake.squares.insert(0, square)
+        # Draw food
+        fcolor = random.choice(["red", "blue", "pink", "cyan", "white"])
+        fx, fy = self.food
+        self.canvas.create_oval(fx, fy, fx + CELL, fy + CELL, fill=fcolor)
 
-    if x == food.coordinates[0] and y == food.coordinates[1]:
-        global score
-        score += 1
-        label.config(text="Score:{}".format(score))
-        canvas.delete("food")
-        food = Food()
-    else:
-        del snake.coordinates[-1]
-        canvas.delete(snake.squares[-1])
-        del snake.squares[-1]
+        # Score & lives
+        self.canvas.create_text(50, 10, fill="white", font="Arial 12 bold", text=f"Score: {self.score}")
+        self.canvas.create_text(550, 10, fill="white", font="Arial 12 bold", text=f"❤️ x {self.hearts}")
 
-    if check_collision(snake):
-        game_over()
-    else:
-        window.after(SPEED, next_turn, snake, food)
+    def update(self):
+        if not self.running:
+            return
 
-def change_direction(new_direction):
-    global direction
+        head_x, head_y = self.snake[0]
+        if self.direction == "Up":
+            head_y -= CELL
+        elif self.direction == "Down":
+            head_y += CELL
+        elif self.direction == "Left":
+            head_x -= CELL
+        elif self.direction == "Right":
+            head_x += CELL
 
-    if new_direction == 'left' and direction != 'right':
-        direction = new_direction
-    elif new_direction == 'right' and direction != 'left':
-        direction = new_direction
-    elif new_direction == 'up' and direction != 'down':
-        direction = new_direction
-    elif new_direction == 'down' and direction != 'up':
-        direction = new_direction
+        # Wrap-around
+        head_x %= WIDTH
+        head_y %= HEIGHT
+        new_head = (head_x, head_y)
 
-def check_collision(snake):
-    x, y = snake.coordinates[0]
+        if new_head in self.snake:
+            self.hearts -= 1
+            if not self.muted:
+                hit_sound.play()
+            if self.hearts == 0:
+                self.game_over()
+                return
+            else:
+                self.snake = [(100, 100), (80, 100), (60, 100)]
+                self.direction = "Right"
+        else:
+            self.snake.insert(0, new_head)
+            if new_head == self.food:
+                self.score += 1
+                self.food = self.get_new_food()
+                if not self.muted:
+                    eat_sound.play()
+            else:
+                self.snake.pop()
 
-    if x < 0 or x >= GAME_WIDTH or y < 0 or y >= GAME_HEIGHT:
-        return True
+        self.draw()
+        self.root.after(SPEED, self.update)
 
-    for body_part in snake.coordinates[1:]:
-        if x == body_part[0] and y == body_part[1]:
-            return True
+    def change_dir(self, new_dir):
+        opposite = {"Up": "Down", "Down": "Up", "Left": "Right", "Right": "Left"}
+        if new_dir != opposite.get(self.direction):
+            self.direction = new_dir
 
-    return False
+    def pause(self, event=None):
+        self.running = False
 
-def game_over():
-    canvas.delete(tk.ALL)
-    canvas.create_text(canvas.winfo_width() / 2, canvas.winfo_height() / 2,
-                       font=('consolas', 40), text="GAME OVER", fill="red", tag="gameover")
+    def resume(self, event=None):
+        if not self.running:
+            self.running = True
+            self.update()
 
-# Main game window
-window = tk.Tk()
-window.title("Snake Game - Nokia Style")
-window.resizable(False, False)
+    def toggle_music(self, event=None):
+        self.muted = not self.muted
+        if self.muted:
+            pygame.mixer.music.pause()
+        else:
+            pygame.mixer.music.unpause()
 
-score = 0
-direction = 'down'
+    def game_over(self):
+        pygame.mixer.music.stop()
+        self.canvas.create_text(WIDTH // 2, HEIGHT // 2, fill="white", font="Arial 20 bold", text="💀 Game Over 💀")
+        self.canvas.create_text(WIDTH // 2, HEIGHT // 2 + 30, fill="white", font="Arial 12", text=f"Final Score: {self.score}")
+        self.running = False
 
-label = tk.Label(window, text="Score:{}".format(score), font=('consolas', 20))
-label.pack()
-
-canvas = tk.Canvas(window, bg=BACKGROUND_COLOR, height=GAME_HEIGHT, width=GAME_WIDTH)
-canvas.pack()
-
-window.update()
-
-# Center the window
-x = int((window.winfo_screenwidth() / 2) - (GAME_WIDTH / 2))
-y = int((window.winfo_screenheight() / 2) - (GAME_HEIGHT / 2))
-window.geometry(f"{GAME_WIDTH}x{GAME_HEIGHT}+{x}+{y}")
-
-# Bind arrow keys
-window.bind('<Left>', lambda event: change_direction('left'))
-window.bind('<Right>', lambda event: change_direction('right'))
-window.bind('<Up>', lambda event: change_direction('up'))
-window.bind('<Down>', lambda event: change_direction('down'))
-
-# Start game
-snake = Snake()
-food = Food()
-next_turn(snake, food)
-
-window.mainloop()
+root = tk.Tk()
+root.title("Python Snake Game 🐍")
+game = SnakeGame(root)
+root.mainloop()
