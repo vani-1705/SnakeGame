@@ -1,4 +1,14 @@
 # 🐍 Advanced Snake Game using Python (Tkinter + Pygame)
+# GAME LOGIC:
+-In this snake game food placed in random places having random colors. 
+-If snake eats food then snake size will increase.
+-U can move snake with buttons.
+-Snake pass through walls but if snake bites itself then snake died.
+-But there are 5 chances if snake died score will continue but snake size will decrease.
+-If 5 chances are over then game is over then u should restart the game.
+
+# GAME IDEA:
+This game idea came from nokia phones which resembles childhood memories with more features.
 
 This is a feature-rich **Snake Game** developed using **Python's Tkinter** for GUI and **Pygame** for sound. The game includes modern features like music, wrap-around walls, hearts (lives), colorful food, and smooth controls.
 
@@ -39,6 +49,8 @@ This is a feature-rich **Snake Game** developed using **Python's Tkinter** for G
 - `hit.wav` — Sound effect when snake hits itself
 
 ---
+![Snake](https://github.com/user-attachments/assets/6823470a-9cd4-4eb6-87de-0e85cbb3cd6f)
+
 
 ## 🛠️ Requirements
 
