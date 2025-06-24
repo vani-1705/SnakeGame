@@ -1,53 +1,49 @@
-🐍 Snake Game (Tkinter - Python)
+# 🐍 Advanced Snake Game using Python (Tkinter + Pygame)
 
-A simple classic Snake game built using Python's Tkinter GUI library. The game includes smooth movement, collision detection, and score tracking — inspired by old Nokia-style gameplay.
+This is a feature-rich **Snake Game** developed using **Python's Tkinter** for GUI and **Pygame** for sound. The game includes modern features like music, wrap-around walls, hearts (lives), colorful food, and smooth controls.
 
-📸 Preview
+---
 
-![Snake](https://github.com/user-attachments/assets/9b43a93f-c5d4-4452-a547-889bc55227ca)
- – but when you run it, you’ll see a black screen, golden snake, and red food dots 🐍🍎
+## 🎮 Game Features
 
-🧠 Features
+- 🟡 Gold-colored snake with smooth movement
+- 🍭 Random-colored food (red, blue, pink, cyan, white)
+- 🔄 Wrap-around walls (snake reappears from the opposite side)
+- ❤️ 5 Lives (hearts) — lose one when snake hits itself
+- 🔊 Background music and sound effects for eating and hitting
+- ⏸️ Pause and resume functionality
+- 🔇 Mute/Unmute music option
+- 📈 Score tracking
 
-• Smooth 2D snake movement
-• Score display with live update
-• Food generation at random grid positions
-• Self-collision and wall-collision game-over logic
-• Centered game window on start
-• Easy keyboard control (Arrow keys)
+---
 
-🚀 How to Run
+## 🎮 Controls
 
-Make sure you have Python 3 installed. Then:
-python Snake.py 
-No external libraries are required.
+| Key | Action           |
+|-----|------------------|
+| ↑   | Move Up          |
+| ↓   | Move Down        |
+| ←   | Move Left        |
+| →   | Move Right       |
+| P   | Pause Game       |
+| R   | Resume Game      |
+| M   | Mute/Unmute Music|
 
-🎮 Controls
+---
 
-KeyAction:
-⬆️ Up ArrowMove Up
-⬇️ Down ArrowMove Down
-⬅️ Left ArrowMove Left
-➡️ Right ArrowMove Right 
+## 📁 Files Included
 
-🛠️ Tech Stack
+- `snake_game.py` — Main Python game file
+- `background.mp3` — Background music file
+- `eat.wav` — Sound effect when snake eats food
+- `hit.wav` — Sound effect when snake hits itself
 
-• Language: Python 3
-• GUI: Tkinter
-• Logic: Grid-based movement and object-oriented design
+---
 
-📁 File Structure
+## 🛠️ Requirements
 
-Snake.py # Main game script README.md # Project documentation 
+Make sure Python 3 is installed.
 
-📌 TODO (Optional Enhancements)
-
-• Add pause and restart buttons
-• Add levels or increasing speed
-• Save high scores to a file
-• Sound effects or animations
-
-🧑‍💻 Author
-
-Developed by [Yepparika.VaniVasanthaLaxmi]
-Feel free to fork, improve, and share!
+Install Pygame using pip:
+```bash
+pip install pygame
