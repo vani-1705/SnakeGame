@@ -97,11 +97,14 @@ eat.mp3
 hit.mp3
 README.md
 
+---
+
 # 🚀 How to Run
 
 ☆Download or clone the project.
 ☆Open index.html in a browser.
 ☆Start playing the game.
 
+---
 # 👩‍💻 Developer
 Yepparika Vani Vasantha Laxmi
