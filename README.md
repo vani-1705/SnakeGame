@@ -1,61 +1,107 @@
-# 🐍 Advanced Snake Game using Python (Tkinter + Pygame)
-# GAME LOGIC:
--In this snake game food placed in random places having random colors. 
--If snake eats food then snake size will increase.
--U can move snake with buttons.
--Snake pass through walls but if snake bites itself then snake died.
--But there are 5 chances if snake died score will continue but snake size will decrease.
--If 5 chances are over then game is over then u should restart the game.
+# 🐍 Snake Game Pro
 
-# GAME IDEA:
-This game idea came from nokia phones which resembles childhood memories with more features.
-
-This is a feature-rich **Snake Game** developed using **Python's Tkinter** for GUI and **Pygame** for sound. The game includes modern features like music, wrap-around walls, hearts (lives), colorful food, and smooth controls.
+Snake Game Pro is a modern and feature-rich snake game developed using HTML, CSS, and JavaScript.  
+The game supports both laptop keyboard controls and mobile touch controls with smooth gameplay, sound effects, lives system, settings menu, and score tracking.
 
 ---
 
-## 🎮 Game Features
+# 🎮 Features
 
-- 🟡 Gold-colored snake with smooth movement
-- 🍭 Random-colored food (red, blue, pink, cyan, white)
-- 🔄 Wrap-around walls (snake reappears from the opposite side)
-- ❤️ 5 Lives (hearts) — lose one when snake hits itself
-- 🔊 Background music and sound effects for eating and hitting
-- ⏸️ Pause and resume functionality
-- 🔇 Mute/Unmute music option
-- 📈 Score tracking
-
----
-
-## 🎮 Controls
-
-| Key | Action           |
-|-----|------------------|
-| ↑   | Move Up          |
-| ↓   | Move Down        |
-| ←   | Move Left        |
-| →   | Move Right       |
-| P   | Pause Game       |
-| R   | Resume Game      |
-| M   | Mute/Unmute Music|
+- 🟩 Smooth snake movement
+- 🟨 Yellow snake head with green body
+- 🔴 Apple food (+1 score)
+- ⬜ Special Milk food (+5 score)
+- ❤️ 3 Lives system
+- 💔 Broken heart after losing a life
+- 💀 Game Over screen
+- ▶️ Continue option after losing a life
+- 🔁 Restart game option
+- ⏸️ Pause and Resume functionality
+- ⚙️ Settings menu
+- ⚡ Speed control (Slow / Medium / High)
+- 🔊 Sound volume control
+- 🔄 Snake can pass through walls
+- 🎵 Background music and sound effects
+- 📱 Mobile touch controls
+- 💻 Laptop keyboard controls
 
 ---
 
-## 📁 Files Included
+# 🎮 Controls
 
-- `snake_game.py` — Main Python game file
-- `background.mp3` — Background music file
-- `eat.wav` — Sound effect when snake eats food
-- `hit.wav` — Sound effect when snake hits itself
+## 💻 Laptop Controls
+
+| Key | Action |
+|------|--------|
+| ⬆️ Arrow Up | Move Up |
+| ⬇️ Arrow Down | Move Down |
+| ⬅️ Arrow Left | Move Left |
+| ➡️ Arrow Right | Move Right |
 
 ---
-![Snake](https://github.com/user-attachments/assets/6823470a-9cd4-4eb6-87de-0e85cbb3cd6f)
 
+## 📱 Mobile Controls
 
-## 🛠️ Requirements
+Use on-screen arrow buttons:
 
-Make sure Python 3 is installed.
+- ⬆️ Move Up
+- ⬇️ Move Down
+- ⬅️ Move Left
+- ➡️ Move Right
 
-Install Pygame using pip:
-```bash
-pip install pygame
+---
+
+# ⚙️ Settings
+
+The game includes a settings menu with:
+
+## ⚡ Speed Options
+- Slow
+- Medium
+- High
+
+## 🔊 Sound Control
+- Increase volume
+- Decrease volume
+
+---
+
+# 🎯 Gameplay
+
+1. Click **START GAME** to begin.
+2. Eat 🔴 apples to gain +1 score.
+3. Eat ⬜ milk food to gain +5 score.
+4. Avoid biting the snake’s own body.
+5. Losing a life changes ❤️ into 💔.
+6. If lives remain, Continue and Restart options appear.
+7. If all lives are lost, Game Over screen appears.
+
+---
+
+# 🛠️ Technologies Used
+
+- HTML
+- CSS
+- JavaScript
+
+---
+
+# 📁 Project Files
+
+```text
+index.html
+style.css
+script.js
+bg.mp3
+eat.mp3
+hit.mp3
+README.md
+
+# 🚀 How to Run
+
+☆Download or clone the project.
+☆Open index.html in a browser.
+☆Start playing the game.
+
+# 👩‍💻 Developer
+Yepparika Vani Vasantha Laxmi
